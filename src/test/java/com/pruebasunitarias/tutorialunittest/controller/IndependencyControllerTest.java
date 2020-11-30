@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 
@@ -23,16 +22,18 @@ class IndependencyControllerTest {
   Optional<Country> country;
 
   @Autowired
-  DiferenciaEntreFechas diferenciaEntreFechas = new DiferenciaEntreFechas();;
+  DiferenciaEntreFechas diferenciaEntreFechas = new DiferenciaEntreFechas();
+
 
   @Autowired
   CountryRepository countryRepositoryMock = Mockito.mock(CountryRepository.class);
 
   @Autowired
-  IndependencyController independencyController = new IndependencyController(countryRepositoryMock, diferenciaEntreFechas);
+  IndependencyController independencyController = new IndependencyController(countryRepositoryMock,
+      diferenciaEntreFechas);
 
   @BeforeEach
-  void setUp(){
+  void setUp() {
     System.out.println("Inicio Mock");
     System.out.println("-------------");
     Country mockCountry = new Country();
@@ -49,7 +50,8 @@ class IndependencyControllerTest {
 
   @Test
   void getCountryDetails() {
-    ResponseEntity<CountryResponse> responseServices = independencyController.getCountryDetails("CO");
+    ResponseEntity<CountryResponse> responseServices = independencyController
+        .getCountryDetails("CO");
     System.out.println(responseServices);
     System.out.println(responseServices.getBody().getCountryName());
     System.out.println(responseServices.getBody().getCapitalName());
@@ -63,7 +65,8 @@ class IndependencyControllerTest {
 
   @Test
   void getInvalidCountryDetails() {
-    ResponseEntity<CountryResponse> responseServices = independencyController.getCountryDetails("BO");
+    ResponseEntity<CountryResponse> responseServices = independencyController
+        .getCountryDetails("BO");
     System.out.println(responseServices);
     System.out.println(responseServices.getBody().getCountryName());
     System.out.println(responseServices.getBody().getCapitalName());
