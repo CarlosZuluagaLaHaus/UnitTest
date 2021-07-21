@@ -16,12 +16,6 @@ import org.springframework.http.ResponseEntity;
 class IndependencyControllerTest {
 
   @Autowired
-  CountryResponse countryResponse;
-
-  @Autowired
-  Optional<Country> country;
-
-  @Autowired
   DiffBetweenDates diffBetweenDates = new DiffBetweenDates();
 
 
@@ -47,7 +41,6 @@ class IndependencyControllerTest {
     Mockito.when(countryRepositoryMock.findCountryByIsoCode("CO")).thenReturn(mockCountry);
 
   }
-
 
   @Test
   void getCountryDetails() {
