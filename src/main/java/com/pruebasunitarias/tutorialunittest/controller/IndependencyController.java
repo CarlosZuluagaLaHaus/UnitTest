@@ -3,7 +3,7 @@ package com.pruebasunitarias.tutorialunittest.controller;
 import com.pruebasunitarias.tutorialunittest.models.Country;
 import com.pruebasunitarias.tutorialunittest.models.CountryResponse;
 import com.pruebasunitarias.tutorialunittest.repositories.CountryRepository;
-import com.pruebasunitarias.tutorialunittest.util.DiferenciaEntreFechas;
+import com.pruebasunitarias.tutorialunittest.util.DiffBetweenDates;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,11 +18,11 @@ public class IndependencyController {
     CountryResponse countryResponse;
     Optional<Country> country;
     CountryRepository countryRepository;
-    DiferenciaEntreFechas diferenciaEntreFechas;
+    DiffBetweenDates diffBetweenDates;
 
-    public IndependencyController(CountryRepository countryRepository,DiferenciaEntreFechas diferenciaEntreFechas) {
+    public IndependencyController(CountryRepository countryRepository, DiffBetweenDates diffBetweenDates) {
         this.countryRepository = countryRepository;
-        this.diferenciaEntreFechas = diferenciaEntreFechas;
+        this.diffBetweenDates = diffBetweenDates;
     }
 
     @GetMapping(path = "/country/{countryId}")
@@ -33,7 +33,7 @@ public class IndependencyController {
         country = Optional.ofNullable(countryRepository.findCountryByIsoCode(countryId.toUpperCase()));
 
         if (country.isPresent()) {
-            Period period = diferenciaEntreFechas.calculateYearsOfIndependency(country.get().getCountryIdependenceDate());
+            Period period = diffBetweenDates.calculateYearsOfIndependency(country.get().getCountryIdependenceDate());
             countryResponse.setCountryName(country.get().getCountryName());
             countryResponse.setCapitalName(country.get().getCountryCapital());
             countryResponse.setIndependenceDate(country.get().getCountryIdependenceDate());

@@ -3,7 +3,7 @@ package com.pruebasunitarias.tutorialunittest.controller;
 import com.pruebasunitarias.tutorialunittest.models.Country;
 import com.pruebasunitarias.tutorialunittest.models.CountryResponse;
 import com.pruebasunitarias.tutorialunittest.repositories.CountryRepository;
-import com.pruebasunitarias.tutorialunittest.util.DiferenciaEntreFechas;
+import com.pruebasunitarias.tutorialunittest.util.DiffBetweenDates;
 import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +22,7 @@ class IndependencyControllerTest {
   Optional<Country> country;
 
   @Autowired
-  DiferenciaEntreFechas diferenciaEntreFechas = new DiferenciaEntreFechas();
+  DiffBetweenDates diffBetweenDates = new DiffBetweenDates();
 
 
   @Autowired
@@ -30,9 +30,10 @@ class IndependencyControllerTest {
 
   @Autowired
   IndependencyController independencyController = new IndependencyController(countryRepositoryMock,
-      diferenciaEntreFechas);
+          diffBetweenDates);
 
   @BeforeEach
+  //Arrange
   void setUp() {
     System.out.println("Inicio Mock");
     System.out.println("-------------");
@@ -50,8 +51,10 @@ class IndependencyControllerTest {
 
   @Test
   void getCountryDetails() {
+    //Act
     ResponseEntity<CountryResponse> responseServices = independencyController
         .getCountryDetails("CO");
+
     System.out.println(responseServices);
     System.out.println(responseServices.getBody().getCountryName());
     System.out.println(responseServices.getBody().getCapitalName());
@@ -59,17 +62,22 @@ class IndependencyControllerTest {
     System.out.println(responseServices.getBody().getYearsOfIndependency());
     System.out.println(responseServices.getBody().getMonthsOfIndependency());
     System.out.println(responseServices.getBody().getDayssOfIndependency());
+
+    //Assert
     Assertions.assertEquals("Colombia", responseServices.getBody().getCountryName());
     Assertions.assertEquals(200, responseServices.getStatusCode().value());
   }
 
   @Test
   void getInvalidCountryDetails() {
+    //Act
     ResponseEntity<CountryResponse> responseServices = independencyController
         .getCountryDetails("BO");
     System.out.println(responseServices);
     System.out.println(responseServices.getBody().getCountryName());
     System.out.println(responseServices.getBody().getCapitalName());
+
+    //Assert
     Assertions.assertEquals(null, responseServices.getBody().getCountryName());
     Assertions.assertEquals(200, responseServices.getStatusCode().value());
 
